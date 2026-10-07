@@ -39,6 +39,12 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
       - run: npm ci
+      # The tokenizer tests run against the real vocabulary (700 KB, pinned + checksummed).
+      - name: Fetch model tokenizer
+        run: |
+          d="$HOME/.cache/ozen/models/82aae03d"; mkdir -p "$d"
+          curl -fsSL -o "$d/tokenizer.json" https://huggingface.co/itayinbar/Ozen-v1/resolve/82aae03decb5592029922ea15e19ed96d1e8ece3/tokenizer.json
+          echo "050f0aff338e5779ebe80f25c760da76857e009dc17c2caef8424d613ee7dbfa  $d/tokenizer.json" | sha256sum -c -
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
