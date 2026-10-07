@@ -1,0 +1,15 @@
+.DS_Store
+node_modules/
+dist/
+*.log
+.venv/
+__pycache__/
+# model weights are fetched by tools/model/fetch-model.sh, never committed
+*.onnx
+ios/Ozen/Model/
+ios/build/
+ios/*.xcodeproj/
+DerivedData/
+xcuserdata/
+web/test-results/
+web/playwright-report/

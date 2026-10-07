@@ -1,0 +1,35 @@
+Ozen bundles or downloads the following third-party material.
+
+Speech recognition model
+------------------------
+itayinbar/Ozen-v1                               Apache-2.0
+  https://huggingface.co/itayinbar/Ozen-v1
+  Hebrew speech recognition model distilled from ivrit-ai/whisper-large-v3-turbo,
+  trained on that model's transcripts of ivrit.ai audio and ivrit.ai crowd
+  transcriptions, used under the ivrit.ai licence
+  (https://www.ivrit.ai/en/the-license/), which requires attribution.
+  Thanks to ivrit.ai (https://www.ivrit.ai/).
+  Base model: openai/whisper-base, MIT, Copyright (c) 2022 OpenAI.
+  The iPhone app bundles the ONNX files; the web app downloads them from the
+  Hugging Face CDN at runtime.
+
+Runtimes
+--------
+ONNX Runtime (onnxruntime-web, onnxruntime-objc)   MIT, Copyright (c) Microsoft Corporation
+
+Fonts
+-----
+Karantina, by Rony Koch                          SIL Open Font License 1.1
+Rubik, by Hubert & Fischer and Meir Sadan         SIL Open Font License 1.1
+  https://openfontlicense.org
+
+Optional runtime dependency (web)
+---------------------------------
+@ffmpeg/ffmpeg and @ffmpeg/core are fetched from a CDN only when a file is in a
+container the browser cannot decode on its own. They are LGPL-licensed and are
+never bundled into this application or linked into it at build time.
+
+Test fixtures
+-------------
+spec/golden/long-he.* is synthesised with the macOS "Carmit" voice from text
+written for this project.
