@@ -4,6 +4,7 @@ Everything here signs and uploads as **Itay Inbar, team `65MGR94YVU`**, using th
 `~/.appstoreconnect/itay-personal-team/`. Nothing here uses the Henia team (`87SV5ZQ3H8`).
 
 ## One-time (App Store Connect website — the API can't create apps)
+0. Xcode → Settings → Accounts: sign in with the Apple ID on team "Itay Inbar" (65MGR94YVU). Signing uses it.
 1. https://appstoreconnect.apple.com/apps → **+ → New App**
    - Platform iOS · Name **אוזן** · Primary language **Hebrew**
    - Bundle ID **com.itayinbar.ozen** (appears after the first archive registers it) · SKU **ozen** · Full access

@@ -54,7 +54,7 @@ try {
   const decl = (await api('GET', `/v1/appInfos/${appInfo.id}/ageRatingDeclaration`)).data;
   const none = ['alcoholTobaccoOrDrugUseOrReferences', 'contests', 'gamblingSimulated', 'horrorOrFearThemes', 'matureOrSuggestiveThemes',
     'medicalOrTreatmentInformation', 'profanityOrCrudeHumor', 'sexualContentGraphicAndNudity', 'sexualContentOrNudity',
-    'violenceCartoonOrFantasy', 'violenceRealistic', 'violenceRealisticProlongedGraphicOrSadistic'];
+    'violenceCartoonOrFantasy', 'violenceRealistic', 'violenceRealisticProlongedGraphicOrSadistic', 'gunsOrOtherWeapons'];
   const attrs = Object.fromEntries(none.map((k) => [k, 'NONE']));
   Object.assign(attrs, { gambling: false, unrestrictedWebAccess: false, lootBox: false, messagingAndChat: false,
     userGeneratedContent: false, parentalControls: false, ageAssurance: false, advertising: false, healthOrWellnessTopics: false });
@@ -123,11 +123,12 @@ if (version && !DRY) {
   const existing = await api('GET', `/v1/appStoreVersions/${version.id}/appStoreReviewDetail`).catch(() => null);
   const attrs = { contactFirstName: 'Itay', contactLastName: 'Inbar', contactEmail: 'itayinbar.me@gmail.com', contactPhone: process.env.OZEN_REVIEW_PHONE || '',
     demoAccountRequired: false, notes };
-  if (!attrs.contactPhone) delete attrs.contactPhone;
-  if (existing?.data) await api('PATCH', `/v1/appStoreReviewDetails/${existing.data.id}`, { data: { type: 'appStoreReviewDetails', id: existing.data.id, attributes: attrs } });
+  if (!attrs.contactPhone) {
+    console.log('! review details skipped: Apple requires a contact phone — rerun with OZEN_REVIEW_PHONE="+972…" or fill it in App Store Connect');
+  } else if (existing?.data) await api('PATCH', `/v1/appStoreReviewDetails/${existing.data.id}`, { data: { type: 'appStoreReviewDetails', id: existing.data.id, attributes: attrs } });
   else await api('POST', '/v1/appStoreReviewDetails', { data: { type: 'appStoreReviewDetails', attributes: attrs,
     relationships: { appStoreVersion: { data: { type: 'appStoreVersions', id: version.id } } } } });
-  console.log(`✓ review details${attrs.contactPhone ? '' : ' (no phone — set OZEN_REVIEW_PHONE or add it in App Store Connect)'}`);
+  if (attrs.contactPhone) console.log('✓ review details');
 }
 
 // ---- Screenshots
