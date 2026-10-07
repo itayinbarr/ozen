@@ -1,0 +1,3 @@
+/* Hebrew is the app's only localization. */
+"CFBundleDisplayName" = "אוזן";
+"NSMicrophoneUsageDescription" = "אוזן מקליטה כדי לתמלל — ההקלטה והתמלול נשארים במכשיר בלבד.";

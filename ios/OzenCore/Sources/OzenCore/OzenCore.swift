@@ -65,6 +65,7 @@ public actor Transcriber {
             let task = Task {
                 do {
                     let samples = try await AudioLoader.load16kMono(url: fileURL)
+                    if Task.isCancelled { throw OzenError.cancelled }
                     try await self.run(samples: samples, continuation: continuation)
                     continuation.finish()
                 } catch {
@@ -90,7 +91,7 @@ public actor Transcriber {
         }
     }
 
-    // MARK: - Implementation hooks (filled in by Engine.swift)
+    // MARK: - Implementation (Engine.swift)
 
     private var _engine: Engine?
 
@@ -102,7 +103,31 @@ public actor Transcriber {
         return e
     }
 
+    // The actor is reentrant across `await`, so runs queue here: one window at a
+    // time on one set of ONNX sessions keeps peak memory to a single window.
+    private var busy = false
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+
+    private func acquire() async {
+        if !busy {
+            busy = true
+            return
+        }
+        await withCheckedContinuation { waiters.append($0) }
+    }
+
+    private func release() {
+        if waiters.isEmpty {
+            busy = false
+        } else {
+            waiters.removeFirst().resume()
+        }
+    }
+
     private func run(samples: [Float], continuation: AsyncThrowingStream<TranscriptionEvent, Error>.Continuation) async throws {
+        await acquire()
+        defer { release() }
+        if Task.isCancelled { throw OzenError.cancelled }
         let engine = try await engine()
         try await engine.run(samples: samples) { event in
             continuation.yield(event)
