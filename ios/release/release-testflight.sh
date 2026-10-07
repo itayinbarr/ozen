@@ -68,8 +68,16 @@ echo "▶ Export (App Store signing)"
 xcodebuild -exportArchive -archivePath "$ARCHIVE" -exportOptionsPlist "${OUT}/ExportOptions-${BUILD}.plist" \
   -exportPath "$EXPORT" "${AUTH[@]}" -quiet
 IPA="$(ls "${EXPORT}"/*.ipa | head -1)"
-codesign -dv "$ARCHIVE/Products/Applications/Ozen.app" 2>&1 | grep -q "TeamIdentifier=${TEAM_ID}" \
-  || { echo "Archive is not signed by ${TEAM_ID}; refusing to upload"; exit 1; }
+# Every bundle in the IPA must carry the personal team's distribution signature.
+CHECK="$(mktemp -d)"; unzip -q "$IPA" -d "$CHECK"
+for bundle in "$CHECK"/Payload/*.app "$CHECK"/Payload/*.app/PlugIns/*.appex; do
+  sig="$(codesign -dvv "$bundle" 2>&1 || true)"
+  case "$sig" in
+    *"TeamIdentifier=${TEAM_ID}"*"Authority=Apple Distribution"*|*"Authority=Apple Distribution"*"TeamIdentifier=${TEAM_ID}"*) ;;
+    *) echo "$(basename "$bundle") is not distribution-signed by ${TEAM_ID}; refusing to upload"; exit 1 ;;
+  esac
+done
+rm -rf "$CHECK"
 du -h "$IPA"
 
 echo "▶ Validate + upload"
