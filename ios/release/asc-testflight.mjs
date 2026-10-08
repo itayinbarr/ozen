@@ -16,7 +16,8 @@ for (let i = 0; i < 80; i += 1) {
   if (state === 'INVALID' || state === 'FAILED') throw new Error(`Build ${buildNumber} failed processing`);
   await sleep(30_000);
 }
-if (build?.attributes.processingState !== 'VALID') throw new Error(`Build ${buildNumber} is still processing; rerun this script later`);
+if (!build) throw new Error(`Build ${buildNumber} never appeared in App Store Connect — Apple likely rejected it during processing; check the "Action needed" email for ITMS errors`);
+if (build.attributes.processingState !== 'VALID') throw new Error(`Build ${buildNumber} is still processing; rerun this script later`);
 
 const groups = (await api('GET', `/v1/apps/${app.id}/betaGroups`)).data;
 let group = groups.find((g) => g.attributes.name === 'Ozen');

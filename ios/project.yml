@@ -67,6 +67,22 @@ targets:
           "$SRCROOT/../tools/model/fetch-model.sh" "$SRCROOT/Ozen/Model"
           cp "$SRCROOT/../spec/mel_filters.bin" "$SRCROOT/Ozen/Model/mel_filters.bin"
           touch "$SRCROOT/Ozen/Model/"*
+    postBuildScripts:
+      # onnxruntime.framework's Info.plist says MinimumOSVersion 15.1 while its binary is built for
+      # a newer iOS; App Store processing rejects that mismatch (ITMS-90208). Make the plist agree
+      # with the binary, then re-sign the framework.
+      - name: Fix onnxruntime.framework MinimumOSVersion
+        basedOnDependencyAnalysis: false
+        script: |
+          set -euo pipefail
+          fw="$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH/onnxruntime.framework"
+          [ -d "$fw" ] || exit 0
+          minos="$(xcrun vtool -show-build "$fw/onnxruntime" | awk '/minos/ {print $2; exit}')"
+          [ -n "$minos" ] || { echo "error: could not read minos of onnxruntime"; exit 1; }
+          /usr/libexec/PlistBuddy -c "Set :MinimumOSVersion $minos" "$fw/Info.plist"
+          if [ "${CODE_SIGNING_ALLOWED:-YES}" = "YES" ] && [ -n "${EXPANDED_CODE_SIGN_IDENTITY:-}" ]; then
+            codesign --force --sign "$EXPANDED_CODE_SIGN_IDENTITY" --timestamp=none --preserve-metadata=identifier,flags "$fw"
+          fi
     settings:
       base:
         PRODUCT_NAME: Ozen
