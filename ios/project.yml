@@ -85,6 +85,7 @@ targets:
           fi
     settings:
       base:
+        TARGETED_DEVICE_FAMILY: "1"
         PRODUCT_NAME: Ozen
         PRODUCT_BUNDLE_IDENTIFIER: com.itayinbar.ozen
         INFOPLIST_FILE: Ozen/Info.plist
@@ -167,6 +168,7 @@ targets:
           - "**/OFL.txt"
     settings:
       base:
+        TARGETED_DEVICE_FAMILY: "1"
         PRODUCT_NAME: OzenLive
         PRODUCT_BUNDLE_IDENTIFIER: com.itayinbar.ozen.live
         INFOPLIST_FILE: OzenLive/Info.plist
@@ -208,6 +210,7 @@ targets:
           - "**/OFL.txt"
     settings:
       base:
+        TARGETED_DEVICE_FAMILY: "1"
         PRODUCT_NAME: OzenShare
         PRODUCT_BUNDLE_IDENTIFIER: com.itayinbar.ozen.share
         INFOPLIST_FILE: OzenShare/Info.plist
@@ -253,6 +256,7 @@ targets:
       - target: Ozen
     settings:
       base:
+        TARGETED_DEVICE_FAMILY: "1"
         PRODUCT_BUNDLE_IDENTIFIER: com.itayinbar.ozen.tests
         GENERATE_INFOPLIST_FILE: YES
         TEST_HOST: $(BUILT_PRODUCTS_DIR)/Ozen.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Ozen

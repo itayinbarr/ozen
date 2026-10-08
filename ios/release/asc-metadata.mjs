@@ -77,8 +77,9 @@ async function patchTolerant(type, id, attrs) {
 
 // ---- Price: free
 try {
-  const sched = await api('GET', `/v1/apps/${app.id}/appPriceSchedule`).catch(() => null);
-  if (!sched?.data && !DRY) {
+  // A schedule can exist with no prices in it (App Store Connect then says "choose a price tier").
+  const priced = await api('GET', `/v1/appPriceSchedules/${app.id}/manualPrices?limit=1`).then((r) => r.data.length > 0).catch(() => false);
+  if (!priced && !DRY) {
     const free = (await api('GET', `/v1/apps/${app.id}/appPricePoints?filter[territory]=USA&limit=200`)).data
       .find((p) => Number(p.attributes.customerPrice) === 0);
     await api('POST', '/v1/appPriceSchedules', { data: { type: 'appPriceSchedules', relationships: {

@@ -77,6 +77,9 @@ for bundle in "$CHECK"/Payload/*.app "$CHECK"/Payload/*.app/PlugIns/*.appex; do
     *) echo "$(basename "$bundle") is not distribution-signed by ${TEAM_ID}; refusing to upload"; exit 1 ;;
   esac
 done
+# iPhone only: an iPad-capable build makes App Store Connect demand 13-inch iPad screenshots.
+family="$(plutil -extract UIDeviceFamily json -o - "$CHECK"/Payload/*.app/Info.plist)"
+[ "$family" = "[1]" ] || { echo "UIDeviceFamily is $family, expected [1] (iPhone only); refusing to upload"; exit 1; }
 rm -rf "$CHECK"
 du -h "$IPA"
 
