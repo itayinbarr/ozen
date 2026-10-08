@@ -22,3 +22,27 @@ export function deviceWarning(): string | null {
   if (isLikelyMobile() && !hasWebGPU()) return 'הדפדפן הזה לא תומך ב־WebGPU, אז התמלול יהיה איטי יותר. עדיף לעדכן את המערכת או לנסות במחשב.'
   return null
 }
+
+/** iPhone/iPad (incl. iPadOS that reports itself as a Mac) or Android, from the user agent. */
+export function mobileOS(): 'ios' | 'android' | null {
+  const ua = navigator.userAgent
+  if (/iPhone|iPad|iPod/.test(ua) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(ua))) return 'ios'
+  if (/Android/i.test(ua)) return 'android'
+  return null
+}
+
+/**
+ * What to tell people while recording. iOS suspends a backgrounded page and cuts
+ * its microphone; Android Chrome keeps a tab's microphone running with the
+ * screen off, as long as the tab itself stays open.
+ */
+export function recordingHint(): string | null {
+  switch (mobileOS()) {
+    case 'ios':
+      return 'אל תכבו את המסך ואל תצאו מהדפדפן בזמן ההקלטה'
+    case 'android':
+      return 'אפשר לכבות את המסך, רק אל תסגרו את הדפדפן'
+    default:
+      return null
+  }
+}

@@ -48,7 +48,7 @@ test('about sheet links to the privacy page', async ({ page }) => {
   await page.goto('./')
   await page.getByRole('button', { name: /אודות/ }).click()
   const sheet = page.getByRole('dialog', { name: 'אודות' })
-  await expect(sheet.getByRole('link', { name: 'GitHub' })).toBeVisible()
+  await expect(sheet.getByText('GitHub')).toHaveCount(0)
   await expect(sheet.getByText('תמיכה')).toHaveCount(0)
   await sheet.getByRole('link', { name: 'פרטיות' }).click()
   await expect(page).toHaveURL(/privacy\.html$/)

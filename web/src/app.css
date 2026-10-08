@@ -64,7 +64,9 @@ body { overflow: hidden; overscroll-behavior: none; }
   transition: opacity 0.5s;
 }
 .timer.paused { animation: oz-blink 1.2s ease-in-out infinite; }
-.orb-wrap { margin-top: 36px; }
+/* Hint and orb share the design's 36px gap under the timer, so nothing moves when it shows. */
+.rec-hint { margin-top: 8px; height: 20px; padding: 0 16px; font-size: 13px; line-height: 20px; color: var(--sub); text-align: center; white-space: nowrap; transition: opacity .5s; }
+.orb-wrap { margin-top: 8px; }
 .orb { width: 280px; height: 280px; cursor: pointer; -webkit-tap-highlight-color: transparent; border: 0; padding: 0; background: none; color: inherit; display: block; border-radius: 50%; }
 .orb svg { display: block; overflow: visible; }
 .orb-hint { margin-top: 14px; font-size: 16px; font-weight: 500; color: var(--sub); height: 22px; text-align: center; }
@@ -316,7 +318,6 @@ body { overflow: hidden; overscroll-behavior: none; }
 .hint { font-size: 14px; color: var(--sub); text-align: center; text-wrap: pretty; }
 .about-text { font-size: 15px; line-height: 1.6; color: var(--ink); }
 .about-text p { margin: 0 0 8px; }
-.about-small { font-size: 13px; color: var(--sub); line-height: 1.5; }
 .about-links { display: flex; gap: 10px; flex-wrap: wrap; }
 .about-links a { flex: 1; min-width: 110px; justify-content: center; }
 

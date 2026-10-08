@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { lengthBucket, track } from '../lib/analytics.ts'
 import { ACCEPT_ATTRIBUTE, decodeAudio } from '../lib/audio.ts'
-import { deviceWarning } from '../lib/device.ts'
+import { deviceWarning, recordingHint } from '../lib/device.ts'
 import { CancelledError, EngineClient, type Job, type ModelState } from '../lib/engine.ts'
 import { toMarkdown, toText } from '../lib/exporters.ts'
 import { clock, fmt, megabytes, remainingLabel, safeFileName, stem, todayLabel } from '../lib/format.ts'
@@ -16,6 +16,9 @@ import { MODEL_FILES } from '../engine/constants.ts'
 import { ImportIcon, Logo, PauseIcon, PlayIcon, ShareIcon, CloseIcon } from './icons.tsx'
 import { Orb, type RecState } from './Orb.tsx'
 import { Transcript, type Doc } from './Transcript.tsx'
+
+/** Shown under the timer while recording on phones (see recordingHint). */
+const REC_HINT = recordingHint()
 
 type Screen = 'home' | 'proc' | 'tr'
 type Sheet = null | 'import' | 'export' | 'about'
@@ -431,6 +434,7 @@ export function App() {
 
   // ---------------------------------------------------------------- render helpers
   const recording = rec !== 'idle'
+  const recHint = REC_HINT
   const orbHint = rec === 'idle' ? 'לחצו להתחלת הקלטה' : rec === 'paused' ? 'מושהה · לחצו לסיום' : 'לחצו לסיום'
 
   const downloading = model.phase === 'loading' && !model.fromCache
@@ -549,6 +553,9 @@ export function App() {
           <div className="home-center">
             <div className={`timer${rec === 'paused' ? ' paused' : ''}`} dir="ltr" style={{ opacity: recording ? 1 : 0 }} aria-hidden={!recording}>
               {fmt(elapsed)}
+            </div>
+            <div className="rec-hint" style={{ opacity: recording && recHint ? 1 : 0 }} aria-hidden={!recording || !recHint}>
+              {recHint}
             </div>
             <div className="orb-wrap">
               <Orb rec={rec} level={level} onClick={() => void toggleRec()} drawKey={drawKey} label={rec === 'idle' ? 'התחלת הקלטה' : 'סיום הקלטה'} />
@@ -709,13 +716,6 @@ function About() {
         <a className="sheet-row" href={`${base}privacy.html`}>
           פרטיות
         </a>
-      </div>
-      <div className="about-small">
-        קוד פתוח ב־
-        <a href="https://github.com/itayinbarr/ozen" target="_blank" rel="noopener">
-          GitHub
-        </a>
-        .
       </div>
     </>
   )
