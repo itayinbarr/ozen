@@ -44,18 +44,17 @@ test('import sheet opens with a file picker', async ({ page }) => {
   await expect(sheet).toBeHidden()
 })
 
-test('about sheet links to privacy and support pages', async ({ page }) => {
+test('about sheet links to the privacy page', async ({ page }) => {
   await page.goto('./')
   await page.getByRole('button', { name: /אודות/ }).click()
   const sheet = page.getByRole('dialog', { name: 'אודות' })
-  await expect(sheet.getByText('ivrit.ai').first()).toBeVisible()
+  await expect(sheet.getByRole('link', { name: 'GitHub' })).toBeVisible()
+  await expect(sheet.getByText('תמיכה')).toHaveCount(0)
   await sheet.getByRole('link', { name: 'פרטיות' }).click()
   await expect(page).toHaveURL(/privacy\.html$/)
   await expect(page.getByRole('heading', { name: 'פרטיות', level: 1 })).toBeVisible()
-  await expect(page.getByText('itayinbar.me@gmail.com').first()).toBeVisible()
-  await page.goto('./support.html')
-  await expect(page.getByRole('heading', { name: 'תמיכה', level: 1 })).toBeVisible()
-  await expect(page.getByRole('heading', { name: 'Support' })).toBeVisible()
+  await expect(page.getByText('השמע והתמלולים שלכם לא יוצאים מהמכשיר')).toBeVisible()
+  await expect(page.getByText('בקצרה')).toHaveCount(0)
 })
 
 test('shows the first-run download card or a retry when offline', async ({ page }) => {

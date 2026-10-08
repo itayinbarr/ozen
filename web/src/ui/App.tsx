@@ -565,7 +565,7 @@ export function App() {
               </button>
             ) : (
               <button type="button" className="about-link" onClick={() => setSheet('about')}>
-                אודות · פרטיות · תמיכה
+                אודות · פרטיות
               </button>
             )}
           </div>
@@ -689,7 +689,7 @@ export function App() {
                 )}
               </>
             )}
-            {sheet === 'about' && <About model={model} />}
+            {sheet === 'about' && <About />}
           </div>
         </>
       )}
@@ -697,38 +697,25 @@ export function App() {
   )
 }
 
-function About({ model }: { model: ModelState }) {
+function About() {
   const base = import.meta.env.BASE_URL
-  const backend = model.backend === 'webgpu' ? 'WebGPU' : model.backend === 'wasm' ? 'WebAssembly' : null
   return (
     <>
       <div className="sheet-title">אוזן</div>
       <div className="about-text">
-        <p>תמלול עברית שרץ כולו במכשיר שלכם. השמע והטקסט לא עולים לשום שרת, והגרסה הזו לא שומרת כלום — רק את המודל, בדפדפן.</p>
+        <p>תמלול בעברית שרץ על המכשיר שלכם. השמע והטקסט לא עולים לשום שרת ולא נשמרים בשום מקום.</p>
       </div>
       <div className="about-links">
         <a className="sheet-row" href={`${base}privacy.html`}>
           פרטיות
         </a>
-        <a className="sheet-row" href={`${base}support.html`}>
-          תמיכה
-        </a>
       </div>
       <div className="about-small">
-        המודל{' '}
-        <a href="https://huggingface.co/itayinbar/Ozen-v1" target="_blank" rel="noopener">
-          Ozen-v1
-        </a>{' '}
-        זוקק מהמודל של{' '}
-        <a href="https://www.ivrit.ai" target="_blank" rel="noopener">
-          ivrit.ai
-        </a>{' '}
-        ואומן על נתוני הדיבור שלהם — תודה ל־ivrit.ai. מבוסס על Whisper של OpenAI. גופנים: Karantina ו־Rubik. קוד פתוח ב־
+        קוד פתוח ב־
         <a href="https://github.com/itayinbarr/ozen" target="_blank" rel="noopener">
           GitHub
         </a>
         .
-        {backend && <> · רץ על {backend}</>}
       </div>
     </>
   )

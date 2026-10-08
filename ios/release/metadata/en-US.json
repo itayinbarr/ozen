@@ -4,7 +4,7 @@
   "promotionalText": "Record, share a WhatsApp voice note, or import a file — and get a Hebrew transcript in seconds. No internet, no servers.",
   "description": "Ozen turns spoken Hebrew into text, right on your iPhone. Your recordings and transcripts never leave the device — no uploads, no account, no subscription.\n\nWhat you can do:\n• Record a meeting, lecture or idea and get a transcript split into timestamped paragraphs\n• Share a WhatsApp voice note straight to Ozen\n• Import audio files (m4a, mp3, wav, opus and more)\n• Search, edit, rename, and play back from any paragraph\n• Copy with one tap, or export as text or Markdown\n• Keep recording with the screen locked, with controls in the Dynamic Island and on the Lock Screen\n\nFully private: the speech recognition model runs on the device itself and works in airplane mode. Ozen collects no data.\n\nUnder the hood: Ozen-v1, a small, fast Hebrew speech recognition model distilled from an ivrit.ai model.",
   "keywords": "transcribe,transcription,hebrew,speech to text,voice notes,whatsapp,recorder,meeting,dictation",
-  "supportUrl": "https://itayinbarr.github.io/ozen/support.html",
+  "supportUrl": "https://github.com/itayinbarr/ozen",
   "marketingUrl": "https://itayinbarr.github.io/ozen/",
   "privacyPolicyUrl": "https://itayinbarr.github.io/ozen/privacy.html",
   "whatsNew": "The first release of Ozen."

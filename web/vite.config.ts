@@ -111,7 +111,6 @@ export default defineConfig({
       input: {
         main: resolve(here, 'index.html'),
         privacy: resolve(here, 'privacy.html'),
-        support: resolve(here, 'support.html'),
       },
     },
   },
