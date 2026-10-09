@@ -33,7 +33,7 @@ enum DemoContent {
     }
 
     static let initial: [Item] = [
-        Item(title: "פגישת השקה — גרסה 2.4", daysAgo: 0, hour: 9, minute: 12, duration: 1421,
+        Item(title: "פגישת השקה של גרסה 2.4", daysAgo: 0, hour: 9, minute: 12, duration: 1421,
              texts: ["טוב, בואו נתחיל. המטרה היום היא לסגור את לוח הזמנים להשקה של הגרסה החדשה."] + sample.dropFirst().map(\.text)),
         Item(title: "הודעה קולית מדנה", daysAgo: 1, hour: 18, minute: 3, duration: 72,
              texts: ["היי, רציתי רק לעדכן שהספק אישר את ההזמנה, והמשלוח אמור להגיע ביום ראשון.",
@@ -41,7 +41,7 @@ enum DemoContent {
         Item(title: "שיחה עם רואה החשבון", daysAgo: 2, hour: 11, minute: 40, duration: 2465,
              texts: ["לגבי הדוח השנתי, יש כמה מסמכים שחסרים לנו כדי לסגור את השנה.",
                      "אני צריך את האישורים מהבנק ואת הקבלות על ההוצאות של הרבעון האחרון."]),
-        Item(title: "הרצאה — עיצוב מוצר", daysAgo: 6, hour: 14, minute: 0, duration: 4350,
+        Item(title: "הרצאה על עיצוב מוצר", daysAgo: 6, hour: 14, minute: 0, duration: 4350,
              texts: ["השאלה הראשונה שצריך לשאול היא בשביל מי אנחנו בונים את המוצר.",
                      "רק אחרי שעונים על זה אפשר להתחיל לדבר על פיצ׳רים."]),
         Item(title: "רעיונות לפרויקט", daysAgo: 9, hour: 22, minute: 15, duration: 200,
@@ -100,7 +100,7 @@ enum DemoContent {
         case "recording":
             model.recorder.startDemo(elapsed: 42)
         case "autoRecord":
-            // Real microphone recording that stops by itself: exercises recorder → Live Activity → job → keep sheet.
+            // Real microphone recording that stops by itself: exercises the recorder, Live Activity, job queue and keep sheet.
             Task { @MainActor in
                 try? await Task.sleep(for: .seconds(1))
                 model.toggleRecord()

@@ -4,7 +4,7 @@ import { appUrl, SPEC, startModelServer, type ModelServer } from './helpers.ts'
 
 /**
  * Opt-in (OZEN_E2E_MODEL=1): after one online visit the app must work fully
- * offline — shell from the service worker, model from the Cache API.
+ * offline: shell from the service worker, model from the Cache API.
  */
 
 test.skip(!process.env.OZEN_E2E_MODEL, 'set OZEN_E2E_MODEL=1 to run the model end-to-end tests')

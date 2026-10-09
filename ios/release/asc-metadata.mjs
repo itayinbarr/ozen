@@ -1,6 +1,6 @@
 // Fills Ozen's App Store listing from ios/release/metadata/*.json and uploads screenshots
 // from ios/AppStore/screenshots/<locale>/. Idempotent: re-running updates in place.
-// Never submits for review — that stays a manual, deliberate step.
+// Never submits for review; that stays a manual, deliberate step.
 //
 //   node ios/release/asc-metadata.mjs [--version 1.0.0] [--no-screenshots] [--dry-run]
 import { createHash } from 'node:crypto';
@@ -49,7 +49,7 @@ if (!DRY) {
   console.log('✓ categories Productivity / Utilities');
 }
 
-// ---- Age rating: nothing objectionable → 4+
+// ---- Age rating: nothing objectionable, so 4+
 try {
   const decl = (await api('GET', `/v1/appInfos/${appInfo.id}/ageRatingDeclaration`)).data;
   const none = ['alcoholTobaccoOrDrugUseOrReferences', 'contests', 'gamblingSimulated', 'horrorOrFearThemes', 'matureOrSuggestiveThemes',
@@ -60,7 +60,7 @@ try {
     userGeneratedContent: false, parentalControls: false, ageAssurance: false, advertising: false, healthOrWellnessTopics: false });
   if (!DRY) await patchTolerant('ageRatingDeclarations', decl.id, attrs);
   console.log('✓ age rating 4+');
-} catch (e) { console.log(`! age rating: ${e.message} — set it in App Store Connect`); }
+} catch (e) { console.log(`! age rating: ${e.message}. Set it in App Store Connect`); }
 
 // PATCH, dropping any attribute this API version doesn't know, one at a time.
 async function patchTolerant(type, id, attrs) {
@@ -90,7 +90,7 @@ try {
         relationships: { appPricePoint: { data: { type: 'appPricePoints', id: free.id } } } }] });
   }
   console.log('✓ price free');
-} catch (e) { console.log(`! price: ${e.message} — set "Free" in App Store Connect → Pricing`); }
+} catch (e) { console.log(`! price: ${e.message}. Set "Free" in App Store Connect, Pricing`); }
 
 // ---- Version + localizations
 let version = (await api('GET', `/v1/apps/${app.id}/appStoreVersions?filter[platform]=IOS&limit=10`)).data
@@ -125,7 +125,7 @@ if (version && !DRY) {
   const attrs = { contactFirstName: 'Itay', contactLastName: 'Inbar', contactEmail: 'itayinbar.me@gmail.com', contactPhone: process.env.OZEN_REVIEW_PHONE || '',
     demoAccountRequired: false, notes };
   if (!attrs.contactPhone) {
-    console.log('! review details skipped: Apple requires a contact phone — rerun with OZEN_REVIEW_PHONE="+972…" or fill it in App Store Connect');
+    console.log('! review details skipped: Apple requires a contact phone. Rerun with OZEN_REVIEW_PHONE="+972…" or fill it in App Store Connect');
   } else if (existing?.data) await api('PATCH', `/v1/appStoreReviewDetails/${existing.data.id}`, { data: { type: 'appStoreReviewDetails', id: existing.data.id, attributes: attrs } });
   else await api('POST', '/v1/appStoreReviewDetails', { data: { type: 'appStoreReviewDetails', attributes: attrs,
     relationships: { appStoreVersion: { data: { type: 'appStoreVersions', id: version.id } } } } });
@@ -173,4 +173,4 @@ async function uploadSet(locId, paths) {
   }
 }
 
-console.log('\nDone. Still manual in App Store Connect: App Privacy → "Data Not Collected", attach the build to the version, then Submit for Review.');
+console.log('\nDone. Still manual in App Store Connect: App Privacy set to "Data Not Collected", attach the build to the version, then Submit for Review.');

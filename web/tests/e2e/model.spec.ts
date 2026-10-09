@@ -33,7 +33,7 @@ for (const name of ['sample-he.wav', 'long-he.wav']) {
     const tStart = Date.now()
     await page.getByTestId('file-input').setInputFiles(join(SPEC, 'golden', name))
     await expect(page.locator('[data-testid="segments"] .seg-text').first()).toBeVisible({ timeout: 10 * 60_000 })
-    await expect(page.getByText('לא נשמר — העתיקו או ייצאו')).toBeVisible()
+    await expect(page.getByText('לא נשמר, העתיקו או ייצאו')).toBeVisible()
     const seconds = (Date.now() - tStart) / 1000
     const texts = await page.locator('[data-testid="segments"] .seg-text').allInnerTexts()
     const expected: string[] = golden[name].segments.map((s: { text: string }) => s.text)

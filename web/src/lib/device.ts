@@ -18,7 +18,7 @@ export function hasWebGPU(): boolean {
 /** Hebrew warning to show on the home screen, or null. */
 export function deviceWarning(): string | null {
   const mem = deviceMemoryGB()
-  if (mem !== undefined && mem <= 2) return 'במכשיר הזה מעט זיכרון — ייתכן שהדפדפן ייסגר באמצע תמלול ארוך.'
+  if (mem !== undefined && mem <= 2) return 'במכשיר הזה מעט זיכרון, וייתכן שהדפדפן ייסגר באמצע תמלול ארוך.'
   if (isLikelyMobile() && !hasWebGPU()) return 'הדפדפן הזה לא תומך ב־WebGPU, אז התמלול יהיה איטי יותר. עדיף לעדכן את המערכת או לנסות במחשב.'
   return null
 }

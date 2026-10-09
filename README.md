@@ -19,9 +19,10 @@ Hebrew speech recognition model (8.6% WER on ivrit.ai eval-d1).
 
 ## How it works
 
-Audio → 16 kHz mono → pause-based paragraphs (`spec/segmenter.md`) → Whisper
-log-mel → ONNX encoder (fp16) → greedy decoding with the merged ONNX decoder
-(fp32) → Hebrew byte-level BPE. Both apps implement the same steps and are
+Audio is converted to 16 kHz mono and cut into pause-based paragraphs
+(`spec/segmenter.md`). Each paragraph becomes a Whisper log-mel, runs through the ONNX
+encoder (fp16), and is decoded greedily with the merged ONNX decoder (fp32) and the
+Hebrew byte-level BPE. Both apps implement the same steps and are
 tested against `tools/model/reference.py`.
 
 ## License

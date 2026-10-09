@@ -251,7 +251,7 @@ export function Transcript({ doc, active, style, onBack, onChange, onCopy, onExp
         )}
         <div className="tr-meta">
           <span>{doc ? `${doc.date} · ${fmt(doc.duration)}` : ''}</span>
-          <span className="chip">לא נשמר — העתיקו או ייצאו</span>
+          <span className="chip">לא נשמר, העתיקו או ייצאו</span>
         </div>
       </div>
 

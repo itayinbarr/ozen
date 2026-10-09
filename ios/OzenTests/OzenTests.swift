@@ -32,7 +32,7 @@ final class HebrewDateTests: XCTestCase {
         XCTAssertEqual(Titles.recording(at: date(2026, 10, 8, 9, 5), now: now, calendar: cal), "הקלטה · 8 באוקטובר, 09:05")
         XCTAssertEqual(Titles.file(named: "ישיבת צוות.m4a"), "ישיבת צוות")
         XCTAssertEqual(Titles.file(named: "archive.2026.mp3"), "archive.2026")
-        XCTAssertEqual(Titles.imported(named: "PTT-20261008-WA0012.opus", origin: .whatsapp), "הודעה קולית — WhatsApp")
+        XCTAssertEqual(Titles.imported(named: "PTT-20261008-WA0012.opus", origin: .whatsapp), "הודעה קולית מוואטסאפ")
     }
 
     func testClock() {

@@ -11,7 +11,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-TEAM_ID="65MGR94YVU"          # personal team — never 87SV5ZQ3H8 (Henia/Amir)
+TEAM_ID="65MGR94YVU"          # personal team, never 87SV5ZQ3H8 (Henia/Amir)
 BUNDLE_ID="com.itayinbar.ozen"
 DIR="${HOME}/.appstoreconnect/itay-personal-team"
 KEY_ID="$(cat "${DIR}/key_id")"
@@ -20,7 +20,7 @@ KEY_PATH="${DIR}/AuthKey_${KEY_ID}.p8"
 [ -f "$KEY_PATH" ] || { echo "Missing $KEY_PATH"; exit 1; }
 security find-identity -v -p codesigning | grep -q "Apple Distribution: .*(${TEAM_ID})" \
   || { echo "No Apple Distribution identity for ${TEAM_ID} in the keychain"; exit 1; }
-# Signing (archive/export) goes through the Apple ID signed in to Xcode → Settings → Accounts:
+# Signing (archive/export) goes through the Apple ID signed in to Xcode (Settings, Accounts):
 # the personal API key can call App Store Connect but Xcode rejects it for provisioning.
 # OZEN_XCODE_KEY=1 switches to key-based signing (needs an Admin-role key).
 if [ "${OZEN_XCODE_KEY:-0}" = "1" ]; then

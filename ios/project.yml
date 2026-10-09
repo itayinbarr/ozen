@@ -105,7 +105,7 @@ targets:
         LSApplicationCategoryType: public.app-category.productivity
         # On-device only: no network calls, no encryption beyond the OS.
         ITSAppUsesNonExemptEncryption: false
-        NSMicrophoneUsageDescription: "אוזן מקליטה כדי לתמלל — ההקלטה והתמלול נשארים במכשיר בלבד."
+        NSMicrophoneUsageDescription: "אוזן מקליטה כדי לתמלל. ההקלטה והתמלול נשארים במכשיר בלבד."
         NSSupportsLiveActivities: true
         UIBackgroundModes: [audio]
         UISupportsDocumentBrowser: false

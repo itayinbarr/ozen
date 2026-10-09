@@ -5,7 +5,7 @@ import { api, appByBundle } from './asc-client.mjs';
 const [buildNumber, bundleId = 'com.itayinbar.ozen'] = process.argv.slice(2);
 const TESTER = 'itayinbar.me@gmail.com';
 const app = await appByBundle(bundleId);
-if (!app) throw new Error(`No App Store Connect app for ${bundleId} — create it first (see ios/release/README.md)`);
+if (!app) throw new Error(`No App Store Connect app for ${bundleId}. Create it first (see ios/release/README.md)`);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 let build;
@@ -16,7 +16,7 @@ for (let i = 0; i < 80; i += 1) {
   if (state === 'INVALID' || state === 'FAILED') throw new Error(`Build ${buildNumber} failed processing`);
   await sleep(30_000);
 }
-if (!build) throw new Error(`Build ${buildNumber} never appeared in App Store Connect — Apple likely rejected it during processing; check the "Action needed" email for ITMS errors`);
+if (!build) throw new Error(`Build ${buildNumber} never appeared in App Store Connect. Apple likely rejected it during processing; check the "Action needed" email for ITMS errors`);
 if (build.attributes.processingState !== 'VALID') throw new Error(`Build ${buildNumber} is still processing; rerun this script later`);
 
 const groups = (await api('GET', `/v1/apps/${app.id}/betaGroups`)).data;

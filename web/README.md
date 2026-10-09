@@ -38,8 +38,8 @@ word piece in this vocabulary, so nothing is forced or suppressed: plain argmax 
 `</s>` or 220 tokens. Both the Node golden test and the browser e2e reproduce
 `golden.json` exactly.
 
-Build-time copies (see `vite.config.ts`): `../spec/mel_filters.bin` → `/ozen/mel_filters.bin`,
-and ONNX Runtime's `ort-wasm-simd-threaded{,.asyncify}.{mjs,wasm}` → `/ozen/ort/<version>/`
+Build-time copies (see `vite.config.ts`): `../spec/mel_filters.bin` to `/ozen/mel_filters.bin`,
+and ONNX Runtime's `ort-wasm-simd-threaded{,.asyncify}.{mjs,wasm}` to `/ozen/ort/<version>/`
 (self-hosted, no CDN).
 
 ## Model loading
@@ -54,7 +54,7 @@ still applies and the cache key stays the canonical URL.
 ## Backend and threading
 
 - **WebGPU** (Chrome/Edge, Android Chrome, Safari 26 / iOS 26) when an adapter with
-  `shader-f16` exists — the encoder is fp16. Encoder and decoder both run on the GPU and the
+  `shader-f16` exists, because the encoder is fp16. Encoder and decoder both run on the GPU and the
   KV cache stays on the GPU between decoder steps (`preferredOutputLocation: 'gpu-buffer'`).
   A short self-test runs after loading; any failure falls back to WASM (decoder first,
   then everything). A localStorage guard switches to WASM for a day if a previous WebGPU

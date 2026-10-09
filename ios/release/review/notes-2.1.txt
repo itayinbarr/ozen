@@ -4,10 +4,10 @@
 
 3. How to use it (no login or sample files needed):
 - Record: tap the orange ear button, speak Hebrew (or play any Hebrew video/podcast near the phone), tap it again to stop. The app transcribes and opens the transcript, split into timestamped paragraphs. You can then keep or delete the audio.
-- Import: tap the upload icon (top left) → "בחירת קובץ" and pick any audio file (m4a, mp3, wav, opus…).
+- Import: tap the upload icon (top left), then "בחירת קובץ", and pick any audio file (m4a, mp3, wav, opus…).
 - WhatsApp: in WhatsApp, long-press a voice note, choose Share (under "More…"), and pick אוזן in the share sheet; then open Ozen and it transcribes the voice note.
 - Transcript screen: tap a paragraph to play from there; search (magnifier), edit (pencil), tap the title to rename, copy, or export as .txt/.md via the share button.
-- Saved transcripts: the list button (top right) — swipe left to delete, or "בחירה" to select several.
+- Saved transcripts: the list button (top right): swipe left to delete, or "בחירה" to select several.
 - Lock screen: while recording, lock the phone; the Live Activity on the Lock Screen / Dynamic Island shows the timer with pause and stop.
 
 4. External services: none. The app makes no network requests. Speech recognition runs on-device with ONNX Runtime (Microsoft, MIT licence) and our own model (Ozen-v1), which is bundled in the app. No AI services, analytics, authentication, payment or data providers are used.

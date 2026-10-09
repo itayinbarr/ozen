@@ -54,7 +54,7 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<false/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>אוזן מקליטה כדי לתמלל — ההקלטה והתמלול נשארים במכשיר בלבד.</string>
+	<string>אוזן מקליטה כדי לתמלל. ההקלטה והתמלול נשארים במכשיר בלבד.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>UIAppFonts</key>

@@ -1,5 +1,5 @@
 // App Store Connect API client for Ozen's release scripts. Uses the PERSONAL team key
-// (Itay Inbar, team 65MGR94YVU) from ~/.appstoreconnect/itay-personal-team — never the repo,
+// (Itay Inbar, team 65MGR94YVU) from ~/.appstoreconnect/itay-personal-team, never the repo,
 // and never the root ~/.appstoreconnect/key_id (that belongs to other setups).
 import { createPrivateKey, sign } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -25,7 +25,7 @@ export async function api(method, path, body) {
   const json = text ? JSON.parse(text) : null;
   if (response.status >= 400) {
     const err = json?.errors?.map((e) => `${e.title}: ${e.detail}`).join(' | ') || text.slice(0, 300);
-    throw new Error(`${method} ${path} → ${response.status} ${err}`);
+    throw new Error(`${method} ${path} failed: ${response.status} ${err}`);
   }
   return json;
 }

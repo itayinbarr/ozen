@@ -165,7 +165,7 @@ final class AppModel {
                     try await recorder.start()
                     orbDrawToken += 1
                 } catch Recorder.StartError.permissionDenied {
-                    showToast("צריך גישה למיקרופון — אפשר לאשר בהגדרות")
+                    showToast("צריך גישה למיקרופון. אפשר לאשר בהגדרות")
                 } catch {
                     showToast("ההקלטה לא התחילה")
                 }

@@ -43,7 +43,7 @@ enum Titles {
         "הקלטה · \(HebrewDate.dayMonth(date, now: now, calendar: calendar)), \(HebrewDate.time(date, calendar: calendar))"
     }
 
-    static let whatsapp = "הודעה קולית — WhatsApp"
+    static let whatsapp = "הודעה קולית מוואטסאפ"
 
     /// The file name without its extension.
     static func file(named name: String) -> String {
