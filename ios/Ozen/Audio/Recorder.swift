@@ -59,12 +59,24 @@ final class Recorder: NSObject {
 
     // MARK: Control
 
-    enum StartError: Error { case permissionDenied, failed }
+    enum StartError: Error {
+        /// The person just answered "Don't Allow" in the system prompt. Respect it: say nothing.
+        case permissionDeclined
+        /// Access was denied earlier and the record button was tapped again.
+        case permissionUnavailable
+        case failed
+    }
 
     func start() async throws {
         guard state == .idle else { return }
-        let granted = await AVAudioApplication.requestRecordPermission()
-        guard granted else { throw StartError.permissionDenied }
+        switch AVAudioApplication.shared.recordPermission {
+        case .granted:
+            break
+        case .denied:
+            throw StartError.permissionUnavailable
+        default:
+            guard await AVAudioApplication.requestRecordPermission() else { throw StartError.permissionDeclined }
+        }
 
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(.playAndRecord, mode: .default, options: [.allowBluetoothHFP, .defaultToSpeaker])
