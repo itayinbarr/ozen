@@ -6,7 +6,7 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react'
 import { lengthBucket, track } from '../lib/analytics.ts'
 import { ACCEPT_ATTRIBUTE, decodeAudio } from '../lib/audio.ts'
-import { deviceWarning, recordingHint } from '../lib/device.ts'
+import { APP_STORE_URL, deviceWarning, mobileOS, recordingHint } from '../lib/device.ts'
 import { CancelledError, EngineClient, type Job, type ModelState } from '../lib/engine.ts'
 import { toMarkdown, toText } from '../lib/exporters.ts'
 import { clock, fmt, megabytes, remainingLabel, safeFileName, stem, todayLabel } from '../lib/format.ts'
@@ -19,6 +19,9 @@ import { Transcript, type Doc } from './Transcript.tsx'
 
 /** Shown under the timer while recording on phones (see recordingHint). */
 const REC_HINT = recordingHint()
+
+/** iPhone and iPad visitors get a link to the native app, which can also record in the background. */
+const SHOW_APP_STORE = mobileOS() === 'ios'
 
 type Screen = 'home' | 'proc' | 'tr'
 type Sheet = null | 'import' | 'export' | 'about'
@@ -571,9 +574,20 @@ export function App() {
                 {rec === 'paused' ? <PlayIcon /> : <PauseIcon />}
               </button>
             ) : (
-              <button type="button" className="about-link" onClick={() => setSheet('about')}>
-                אודות · פרטיות
-              </button>
+              <>
+                {SHOW_APP_STORE && (
+                  <a className="app-store-btn" href={APP_STORE_URL} onClick={() => track('app-store-click')}>
+                    <svg width="14" height="20" viewBox="24 6 64 88" fill="none" stroke="#ff7f11" strokeWidth="10" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M30 40C30 22 44 12 56 12C72 12 82 26 82 40C82 54 72 60 66 68C60 76 60 88 50 88C44 88 40 84 40 80" />
+                      <path d="M44 42C44 32 50 28 57 28C64 28 68 34 68 40C68 48 60 50 58 56" />
+                    </svg>
+                    להורדת האפליקציה לאייפון
+                  </a>
+                )}
+                <button type="button" className="about-link" onClick={() => setSheet('about')}>
+                  אודות · פרטיות
+                </button>
+              </>
             )}
           </div>
         </section>

@@ -7,7 +7,7 @@ interface GoatCounter {
   count?: (vars: { path: string; title?: string; event?: boolean }) => void
 }
 
-export type EventName = 'model-ready' | 'transcribe-done' | 'record-start' | 'import-file'
+export type EventName = 'model-ready' | 'transcribe-done' | 'record-start' | 'import-file' | 'app-store-click'
 
 export function track(name: EventName | `transcribe-done-${string}`): void {
   try {

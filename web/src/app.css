@@ -95,6 +95,22 @@ body { overflow: hidden; overscroll-behavior: none; }
   cursor: pointer;
   animation: oz-fade 0.4s;
 }
+.app-store-btn {
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 22px;
+  background: var(--card);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  animation: oz-fade 0.4s;
+}
+.app-store-btn:active { transform: scale(0.97); }
 .about-link {
   position: absolute;
   bottom: calc(14px + env(safe-area-inset-bottom));

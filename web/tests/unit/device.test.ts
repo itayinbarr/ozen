@@ -27,3 +27,10 @@ describe('recording hint', () => {
     expect(recordingHint()).toBeNull()
   })
 })
+
+describe('App Store link', () => {
+  it('points at the live iPhone app', async () => {
+    const { APP_STORE_URL } = await import('../../src/lib/device.ts')
+    expect(APP_STORE_URL).toBe('https://apps.apple.com/il/app/id6820281644')
+  })
+})

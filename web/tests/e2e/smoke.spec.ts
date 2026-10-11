@@ -79,3 +79,15 @@ test('never scrolls sideways at 320px', async ({ page }) => {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
   expect(overflow).toBeLessThanOrEqual(0)
 })
+
+test('offers the App Store app only on iPhone', async ({ page }, info) => {
+  await page.route('https://gc.zgo.at/**', (r) => r.abort())
+  await page.goto('./')
+  const link = page.getByRole('link', { name: 'להורדת האפליקציה לאייפון' })
+  if (info.project.name.includes('iphone') || info.project.name.includes('webkit')) {
+    await expect(link).toBeVisible()
+    await expect(link).toHaveAttribute('href', 'https://apps.apple.com/il/app/id6820281644')
+  } else {
+    await expect(link).toHaveCount(0)
+  }
+})

@@ -46,3 +46,6 @@ export function recordingHint(): string | null {
       return null
   }
 }
+
+/** The native iPhone app on the App Store. */
+export const APP_STORE_URL = 'https://apps.apple.com/il/app/id6820281644'
